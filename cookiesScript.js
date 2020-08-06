@@ -62,7 +62,7 @@ window.COOKIES_ENABLER = window.COOKIES_ENABLER || (function () {
         const trackGoogle = (trackID) => {
             if(cookie.get() != 'Y') {
                 // disable
-                window[`ga-disable-UA-${trackID}`] = true;
+                window[`ga-disable-${trackID}`] = true;
                  var cookies = document.cookie.split(";");
                 for (var i = 0; i < cookies.length; i++) {
                     var cookie = cookies[i];
@@ -72,11 +72,12 @@ window.COOKIES_ENABLER = window.COOKIES_ENABLER || (function () {
                 }
             } 
             // enable 
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer',trackID);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', trackID, {
+              page_path: window.location.pathname, 'anonymize_ip': true
+            });
             
                                     
             defaults = _extend({}, defaults, {trackID: trackID});
