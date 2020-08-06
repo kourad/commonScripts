@@ -60,13 +60,25 @@ window.COOKIES_ENABLER = window.COOKIES_ENABLER || (function () {
         },
         opts = {cookieName: 'ce-cookie'}, domElmts, start_Y;
         const trackGoogle = (trackID) => {
-            if(cookie.get() != 'Y') {window[`ga-disable-UA-${trackID}`] = true;}
+            if(cookie.get() != 'Y') {
+                // disable
+                window[`ga-disable-UA-${trackID}`] = true;
+                 var cookies = document.cookie.split(";");
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i];
+                    var eqPos = cookie.indexOf("=");
+                    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                }
+            } 
+            // enable 
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer',trackID);
             
+                                    
             defaults = _extend({}, defaults, {trackID: trackID});
         }
     function _extend() {
