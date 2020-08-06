@@ -60,7 +60,7 @@ window.COOKIES_ENABLER = window.COOKIES_ENABLER || (function () {
         },
         opts = {cookieName: 'ce-cookie'}, domElmts, start_Y;
         const trackGoogle = (trackID) => {
-            if(cookie.get() == 'N') window[`ga-disable-${trackID}`] = true;
+            if(cookie.get() != 'Y') window[`ga-disable-${trackID}`] = true;
             defaults = _extend({}, defaults, {trackID: trackID});
         }
     function _extend() {
